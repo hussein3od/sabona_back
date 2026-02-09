@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-// import path from 'path'
+import path from 'path'
 
 // استيراد كل Routes
 import authRoutes from '../src/routes/auth.routes.js'
@@ -10,15 +10,15 @@ import messageRoutes from '../src/routes/message.routes.js'
 import adminRoutes from '../src/routes/admin.routes.js'
 
 // استيراد db و Pool يجب أن يكون مهيأ Serverless
-// import './config/db.js'
+import './config/db.js'
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
-// app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
 
 // routes
 app.use('/api/auth', authRoutes)
