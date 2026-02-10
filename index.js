@@ -8,10 +8,8 @@ import productRoutes from './src/routes/product.routes.js'
 import orderRoutes from './src/routes/order.routes.js'
 import messageRoutes from './src/routes/message.routes.js'
 import adminRoutes from './src/routes/admin.routes.js'
-
-// استيراد db و Pool يجب أن يكون مهيأ Serverless
-// import './config/db.js'
-
+import dotenv from 'dotenv'
+dotenv.config()
 const app = express()
 
 app.use(cors())

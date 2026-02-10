@@ -1,32 +1,20 @@
-import multer from 'multer'
-import path from 'path'
-import fs from 'fs'
-import { fileURLToPath } from 'url'
+import multer from "multer"
+import { put } from "@vercel/blob"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 
-// مجلد uploads داخل src
-const uploadPath = path.join(__dirname, '../uploads')
+export const uploadToBlob = async (file) => {
+  const blob = await put(
+    `products/${Date.now()}-${file.originalname}`,
+    file.buffer,
+    {
+      access: "public",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }
+  )
 
-// تأكد أن المجلد موجود
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true })
+  return blob.url
 }
-
-const storage = multer.diskStorage({
-  destination: uploadPath,
-  filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() + '-' + Math.round(Math.random() * 1e9)
-
-    cb(null, uniqueName + path.extname(file.originalname))
-  },
-})
-
-const upload = multer({
-  storage,
-  limits: { files: 5 },
-})
 
 export default upload

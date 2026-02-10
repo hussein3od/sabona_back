@@ -2,6 +2,10 @@ import pool from '../config/db.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+
+import dotenv from 'dotenv'
+dotenv.config()
+
 export async function register(req, res) {
   const { name, email, phone, password } = req.body;
 
